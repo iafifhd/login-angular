@@ -1,0 +1,30 @@
+<h2 class="page-header">Login</h2>
+<div class="show-hide-message">
+	<div [ngClass]="messageClass">
+		{{message}}
+	</div>
+</div>
+
+<form [formGroup]="fLogin" (submit)="onLoginSubmit()">
+  <div class="form-group">
+    <label for="username">username</label>
+    <input required type="text" name='username' formControlName="username" class="form-control" placeholder="Username"
+      [ngClass] ="{'is-valid':(fLogin.controls.username.valid && fLogin.controls.username.dirty),
+      'is-invalid':(!fLogin.controls.username.valid && fLogin.controls.username.dirty)}">
+    <ul class="text-danger" *ngIf="fLogin.controls.username.dirty && fLogin.controls.username.errors?.required">
+      <li>Required</li>
+    </ul>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input required type="password" name='password' formControlName="password" class="form-control" placeholder="Password"
+    [ngClass] ="{'is-valid':(fLogin.controls.password.valid && fLogin.controls.password.dirty),
+    'is-invalid':(!fLogin.controls.password.valid && fLogin.controls.password.dirty)}">
+    <ul class="text-danger" *ngIf="fLogin.controls.password.dirty && fLogin.controls.password.errors?.required">
+      <li>Required</li>
+    </ul>
+  </div>
+
+  <input [disabled]="!fLogin.valid" type="submit" value="Login" class="btn btn-primary">
+	<input type="reset" value="Cancel" class="btn btn-primary">
+</form>

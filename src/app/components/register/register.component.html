@@ -1,0 +1,65 @@
+<h2 class="page-header">Register</h2>
+<div class="show-hide-message">
+	<div [ngClass]="messageClass">
+		{{message}}
+	</div>
+</div>
+
+<form [formGroup]="formReg" (submit)="onRegisterSubmit()">
+	<div class="form-group">
+		<label for="username">Username</label>
+		<input required type="text" name='username' formControlName="username" class="form-control" (blur)="checkUsername()"
+			[ngClass] ="{'is-valid':(formReg.controls.username.valid && formReg.controls.username.dirty)||(usernameValid && formReg.controls.username.dirty),
+			'is-invalid':(!formReg.controls.username.valid && formReg.controls.username.dirty)||(!usernameValid && formReg.controls.username.dirty)}"
+			placeholder="Username">
+		<ul *ngIf="formReg.controls.username.invalid||usernameMsg" 
+			[ngClass]="{'text-success':usernameValid,'text-danger':formReg.controls.username.invalid||!usernameValid}">
+			<li *ngIf="formReg.controls.username.dirty && formReg.controls.username.errors?.required">Required</li>
+			<li *ngIf="formReg.controls.username.dirty && (formReg.controls.username.errors?.minlength||formReg.controls.username.errors?.maxlength)">Jumlah karakter antara 3 - 15 karakter</li>
+			<li *ngIf="formReg.controls.username.dirty && formReg.controls.username.errors?.validusername">Hanya boleh huruf a - z dan ._</li>
+			<li *ngIf="usernameMsg">{{usernameMsg}}</li>
+		</ul>
+	</div>
+	<div class="form-group">
+		<label for="email">Email</label>
+		<input required type="text" name='email' formControlName="email" class="form-control" (blur)="checkEmail()"
+			[ngClass] ="{'is-valid':(formReg.controls.email.valid && formReg.controls.email.dirty)||(emailValid && formReg.controls.email.dirty),
+			'is-invalid':(!formReg.controls.email.valid && formReg.controls.email.dirty)||(!emailValid && formReg.controls.email.dirty)}" 
+			placeholder="Email">
+		<ul *ngIf="formReg.controls.email.invalid||emailMsg" 
+			[ngClass]="{'text-success':emailValid,'text-danger':formReg.controls.email.invalid||!emailValid}">
+			<li *ngIf="formReg.controls.email.dirty && formReg.controls.email.errors?.required">Required</li>
+			<li *ngIf="formReg.controls.email.dirty && (formReg.controls.email.errors?.minlength||formReg.controls.email.errors?.maxlength)">Jumlah karakter antara 5 - 30 karakter</li>
+			<li *ngIf="formReg.controls.email.dirty && formReg.controls.email.errors?.validemail">Email tidak valid. cth: email@mail.com</li>
+			<li *ngIf="emailMsg">{{emailMsg}}</li>
+		</ul>
+	</div>
+	<div class="form-group">
+		<label for="password">Password</label>
+		<input required type="password" name='password' formControlName="password" class='form-control' [ngClass] ="{'is-valid':(formReg.controls.password.valid && formReg.controls.password.dirty),'is-invalid':(!formReg.controls.password.valid && formReg.controls.password.dirty)}" placeholder="Password">
+		<ul *ngIf="formReg.controls.password.invalid" class="text-danger">
+			<li *ngIf="formReg.controls.password.dirty && formReg.controls.password.errors?.required">Required</li>
+			<li *ngIf="formReg.controls.password.dirty && (formReg.controls.password.errors?.minlength||formReg.controls.password.errors?.maxlength)">Jumlah karakter antara 6 - 30 karakter</li>
+		</ul>
+	</div>
+	<div class="form-group">
+		<label for="confirm">Confirm Password</label>
+		<input required type="password" name='confirm' formControlName="confirm" class='form-control' [ngClass] ="{'is-valid':((formReg.controls.confirm.valid||!formReg.errors?.matchpass) && formReg.controls.confirm.dirty),'is-invalid':((!formReg.controls.confirm.valid||formReg.errors?.matchpass) && formReg.controls.confirm.dirty)}" placeholder="Confirm Password">
+		<ul *ngIf="formReg.errors?.matchpass" class="text-danger">
+			<li *ngIf="formReg.controls.confirm.dirty && formReg.controls.confirm.errors?.required">Required</li>
+			<li *ngIf="formReg.controls.confirm.dirty && formReg.errors?.matchpass">Ketik ulang pasword yang sama</li>
+		</ul>
+	</div>
+
+	<div class="form-group">
+		<label for="userType">User Type</label>
+		<select required name="userType" formControlName="userType" class='form-control'>
+			<option value="2" selected>User</option>
+			<option value="1">Admin</option>
+		</select>
+
+	</div>
+
+	<input [disabled]="!formReg.valid|| !emailValid || !usernameValid" type="submit" value="Register" class="btn btn-primary">
+	<input type="reset" value="Cancel" class="btn btn-primary">
+</form>

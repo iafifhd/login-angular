@@ -1,0 +1,23 @@
+<div class="card" *ngIf="allUser&&userData">
+  <div class="card-header"><h4>Data User & Admin</h4></div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of allUser">
+          <td>{{user.username}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.role.role_type}}</td>
+          <td><button class="btn btn-danger" *ngIf="user._id!=userData._id" (click)="delUser(user)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

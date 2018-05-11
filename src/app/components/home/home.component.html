@@ -1,0 +1,8 @@
+<div class="jumbotron text-center bg-light">
+  <h1>haloo </h1>
+  <p class="lead mb-0">Selamat datang</p> <p *ngIf="authSvc.isLogin()&&userData">{{userData.role?.role_type}} - {{userData.username}}</p>
+  <div>
+    <a *ngIf="!authSvc.isLogin()" routerLink="/register" class="btn btn-primary">Register</a>
+    <a *ngIf="!authSvc.isLogin()" routerLink="/login" class="btn btn-info">Login</a>
+  </div>
+</div>
